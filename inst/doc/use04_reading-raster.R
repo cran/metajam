@@ -1,8 +1,5 @@
 ## ----setup, include = FALSE---------------------------------------------------
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 ## ----libraries, warning=FALSE, message=FALSE, eval=FALSE----------------------
 #  # devtools::install_github("NCEAS/metajam")
@@ -36,11 +33,11 @@ knitr::opts_chunk$set(
 #  plot(shipping_routes$data)
 
 ## ----plot, out.width="90%", echo=FALSE, fig.align="center", fig.cap="Shipping routes frequency"----
-knitr::include_graphics("../inst/images/shipping-raster.png")
+knitr::include_graphics("../man/figures/shipping-raster.png")
 
 ## ----read_metadata, eval=FALSE------------------------------------------------
 #  shipping_routes$summary_metadata
 
 ## ----metadata-table, out.width="100%", echo=FALSE, fig.align="center"---------
-knitr::include_graphics("../inst/images/shipping-metadata.png")
+knitr::include_graphics("../man/figures/shipping-metadata.png")
 

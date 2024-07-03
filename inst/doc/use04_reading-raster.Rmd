@@ -1,19 +1,16 @@
 ---
-title: "Use Case 3 - Processing a raster dataset"
+title: "Use Case 4 - Processing a Raster Dataset"
 author: "Julien Brun, Mitchell Maier, Derek Strong and Irene Steves, NCEAS"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{"Use Case - Downloading a raster dataset using metajam"}
+  %\VignetteIndexEntry{Use Case 4 - Processing a Raster Dataset}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
 ## Summary
@@ -74,7 +71,7 @@ shipping_routes <-  read_d1_files(data_folder, "raster")
 plot(shipping_routes$data)
 ```
 ```{r plot, out.width="90%", echo=FALSE, fig.align="center", fig.cap="Shipping routes frequency"}
-knitr::include_graphics("../inst/images/shipping-raster.png")
+knitr::include_graphics("../man/figures/shipping-raster.png")
 ```  
 
 # Investigate the metadata
@@ -83,6 +80,6 @@ knitr::include_graphics("../inst/images/shipping-raster.png")
 shipping_routes$summary_metadata
 ```
 ```{r metadata-table, out.width="100%", echo=FALSE, fig.align="center"}
-knitr::include_graphics("../inst/images/shipping-metadata.png")
+knitr::include_graphics("../man/figures/shipping-metadata.png")
 ```  
 

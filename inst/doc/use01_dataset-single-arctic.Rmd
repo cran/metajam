@@ -1,19 +1,16 @@
 ---
-title: "Use Case 1 - Processing a single dataset"
+title: "Use Case 1 - Processing a Single Dataset from Arctic Data Center"
 author: "Julien Brun, Mitchell Maier and Irene Steves, NCEAS"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{"Use Case - Downloading one dataset using metajam"}
+  %\VignetteIndexEntry{Use Case 1 - Processing a Single Dataset from Arctic Data Center}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
 ## Summary
@@ -65,7 +62,7 @@ At this point, you should have the data and the metadata downloaded inside your 
 
   
 ```{r, out.width="90%", echo=FALSE, fig.align="center", fig.cap="Local file structure of a dataset downloaded by metajam"}
-knitr::include_graphics("../inst/images/metajam_v1_folder.png")
+knitr::include_graphics("../man/figures/metajam_v1_folder.png")
 ```  
    
 
@@ -83,7 +80,7 @@ You have now loaded in your R environment one named list object that contains th
 
 
 ```{r, out.width="90%", echo=FALSE, fig.align="center", fig.cap="Structure of the named list object containing tabular metadata and data as loaded by metajam"}
-knitr::include_graphics("../inst/images/metajam_v1_named_list.png")
+knitr::include_graphics("../man/figures/metajam_v1_named_list.png")
 ```  
 
 
