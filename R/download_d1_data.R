@@ -22,16 +22,15 @@
 #' @seealso [read_d1_files()] [download_d1_data_pkg()]
 #'
 #' @examples
-#' \dontrun{
-#' download_d1_data("urn:uuid:a2834e3e-f453-4c2b-8343-99477662b570", path = file.path("."))
+#' \donttest{
+#' download_d1_data("urn:uuid:a2834e3e-f453-4c2b-8343-99477662b570", path = tempdir())
 #' download_d1_data(
 #'    "https://cn.dataone.org/cn/v2/resolve/urn:uuid:a2834e3e-f453-4c2b-8343-99477662b570",
-#'     path = file.path(".")
+#'     path = tempdir()
 #'     )
 #' }
 
 download_d1_data <- function(data_url, path) {
-  # TODO: add meta_doi to explicitly specify doi
 
   # Silence visible bindings note
   entity_data <- eml <- dir_name <- NULL
@@ -47,7 +46,7 @@ download_d1_data <- function(data_url, path) {
   if (nrow(data_versions) == 1) {
     data_id <- data_versions$identifier
   } else if (nrow(data_versions) > 1) {
-    #get most recent version
+    # Get most recent version
     data_versions$dateUploaded <- lubridate::ymd_hms(data_versions$dateUploaded)
     data_id <- data_versions$identifier[data_versions$dateUploaded == max(data_versions$dateUploaded)]
   } else {
@@ -61,48 +60,57 @@ download_d1_data <- function(data_url, path) {
   cn <- dataone::CNode()
 
   ## Download Metadata ------------
-  meta_id <- dataone::query(
+  meta_info <- dataone::query(
     cn,
     list(q = sprintf('documents:"%s" AND formatType:"METADATA" AND -obsoletedBy:*', data_id),
-         fl = "identifier")) %>%
-    unlist()
+         fl = "id,dateUploaded",
+         sort = "dateUploaded+desc"))
 
   # if no results are returned, try without -obsoletedBy
-  if (length(meta_id) == 0) {
-    meta_id <- dataone::query(
+  if (length(meta_info) == 0) {
+    meta_info <- dataone::query(
       cn,
       list(q = sprintf('documents:"%s" AND formatType:"METADATA"', data_id),
-           fl = "identifier")) %>%
-      unlist()
+           fl = "id,dateUploaded",
+           sort = "dateUploaded+desc"))
   }
 
-  # depending on results, return warnings
-  if (length(meta_id) == 0) {
+  # Depending on results, return warnings
+  if (length(meta_info) == 0) {
     stop("no metadata records found")
     meta_id <- NULL
-  } else if (length(meta_id) > 1) {
+  } else if (length(meta_info) == 1) {
+    meta_id <- meta_info[[1]]$id
+  } else if (length(meta_info) > 1) {
     warning("multiple metadata records found:\n",
-            paste(meta_id, collapse = "\n"),
-            "\nThe first record was used")
-    meta_id <- meta_id[1]
+            paste(meta_info, collapse = "\n"),
+            "\nThe most recent record was used")
+    # Take the most recent if several
+    meta_id <- meta_info[[1]]$id
   }
 
   metadata_nodes <- dataone::resolve(cn, meta_id)
   meta_obj <- dataone::getObject(d1c@mn, meta_id)
 
 
-  #Preparing some objects for input into language specific functions below
+  # Preparing some objects for input into language specific functions below
   meta_raw <- rawToChar(meta_obj)
-  meta_id <- meta_id[[1]]
+  # meta_id <- meta_id[[1]]       # not sure whay we would need this
 
 
-  #Here we assume that these are the only two types of possible metadata..that's probably not smart
-  #"eml://ecoinformatics.org/eml"
-  #"http://www.isotc211.org/"
+  # Here we assume that these are the only two types of possible metadata... to be changed as the support of metadata
+  # standards expands
+  # "eml://ecoinformatics.org/eml"
+  # "http://www.isotc211.org/"
 
   if (grepl("ecoinformatics.org", meta_raw) == FALSE) {
-    message("Metadata is in ISO format")
+    message("Metadata is NOT in EML format, trying ISO format")
+    # if (grepl("iso", meta_raw) == TRUE) {
+    #   message("Metadata is in ISO format")
     new_dir <- download_ISO_data(meta_raw, meta_obj, meta_id, data_id, metadata_nodes, path = path)
+    # } else {
+    #   stop("Metadata is in an unknow format")
+    # }
   } else if (grepl("ecoinformatics.org", meta_raw) == TRUE) {
     message("Metadata is in EML format")
     new_dir <- download_EML_data(data_url, meta_obj, meta_id, data_id, metadata_nodes, path = path)

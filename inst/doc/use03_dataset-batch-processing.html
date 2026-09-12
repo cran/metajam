@@ -12,7 +12,7 @@
 
 <meta name="author" content="Julien Brun, Mitchell Maier, Irene Steves and Kristen Peach, NCEAS" />
 
-<meta name="date" content="2024-08-16" />
+<meta name="date" content="2026-09-02" />
 
 <title>Use Case 3 - Processing Several Datasets</title>
 
@@ -50,8 +50,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -62,7 +63,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -342,7 +343,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 Datasets</h1>
 <h4 class="author">Julien Brun, Mitchell Maier, Irene Steves and Kristen
 Peach, NCEAS</h4>
-<h4 class="date">2024-08-16</h4>
+<h4 class="date">2026-09-02</h4>
 
 
 
@@ -378,7 +379,7 @@ aggregation.</p>
 <div id="constants" class="section level2">
 <h2>Constants</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># Download the data from DataONE on your local machine</span></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>data_folder <span class="ot">&lt;-</span> <span class="st">&quot;Data_SEC&quot;</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>data_folder <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;Data_SEC&quot;</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># Ammonium to Ammoniacal-nitrogen conversion. We will use this conversion later.</span></span>
 <span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>coeff_conv_NH4_to_NH4N <span class="ot">&lt;-</span> <span class="fl">0.7764676534</span></span></code></pre></div>

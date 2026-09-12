@@ -16,18 +16,18 @@ csv_search_results_url <- "https://drive.google.com/uc?export=download&id=1WTLP2
 
 
 ## ----download, eval=FALSE-----------------------------------------------------
-#  # Create the local directory to store data sets
-#  dir.create(path_folder, showWarnings = FALSE)
-#  
-#  # Read the data listing from Google Drive: https://drive.google.com/open?id=1WTLP2BcXCXmUyv4kmntyhuPfrBNdPIqV
-#  data_listing <- read_csv(csv_search_results_url)
-#  
-#  
-#  ### Download the data and metadata ----
-#  
-#  # Create the list of unique dois
-#  dois <- unique(data_listing$identifier)
-#  
-#  # batch download the datasets
-#  data_folders <- map(dois, ~download_d1_data_pkg(.x, path_folder))
+# # Create the local directory to store data sets
+# dir.create(path_folder, showWarnings = FALSE)
+# 
+# # Read the data listing from Google Drive: https://drive.google.com/open?id=1WTLP2BcXCXmUyv4kmntyhuPfrBNdPIqV
+# data_listing <- read_csv(csv_search_results_url)
+# 
+# 
+# ### Download the data and metadata ----
+# 
+# # Create the list of unique dois
+# dois <- unique(data_listing$identifier)
+# 
+# # batch download the datasets
+# data_folders <- map(dois, ~download_d1_data_pkg(.x, path_folder))
 
